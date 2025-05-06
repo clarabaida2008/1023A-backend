@@ -14,21 +14,29 @@
         align-items: center;
         background-color: rgb(221,160,221);
         flex-direction: column;
+        justify-content: center;
         }
         h1 {
+
             color: rgb(230,230,250);
+        }
+        a {
+            color: rgb(230,230,250);
+            text-decoration: none;
+            font-size: larger;
         }
     </style>
 </head>
 <body>
-    <a href="./cadastro.html">Link Cadastro Maquiagem</a>
     <h1>LISTA DE MAQUIAGEM</h1>
+    <div></div> <a href="./cadastro.html">CADASTRE UMA MAQUIAGEM</a>
+
     <ul id="minhalista">
 
     </ul>
     <script>
         async function buscaDados(){
-            const resposta = await fetch("http://localhost:8000/maquiagem")
+            const resposta = await fetch("http://localhost:8001/maquiagem")
             console.log(resposta)
             if(resposta.status ===200){
                 const dados = await resposta.json()

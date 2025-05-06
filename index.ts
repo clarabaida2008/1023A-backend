@@ -4,9 +4,6 @@ import cors from '@fastify/cors'
 const app = fastify()
 app.register(cors)
 
-app.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
-    reply.send("Fastify Funcionando")
-})
 app.get('/maquiagem', async (request: FastifyRequest, reply: FastifyReply) => {
     try {
         const conn =  await mysql.createConnection({
