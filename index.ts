@@ -7,7 +7,7 @@ app.register(cors)
 app.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
     reply.send("Fastify Funcionando")
 })
-app.get('/estudantes', async (request: FastifyRequest, reply: FastifyReply) => {
+app.get('/maquiagem', async (request: FastifyRequest, reply: FastifyReply) => {
     try {
         const conn =  await mysql.createConnection({
             host: "localhost",
@@ -16,7 +16,7 @@ app.get('/estudantes', async (request: FastifyRequest, reply: FastifyReply) => {
             database: 'banco1023a',
             port: 3306
         })
-        const resultado =  await conn.query("SELECT * FROM estudantes")
+        const resultado =  await conn.query("SELECT * FROM maquiagem")
         const [dados, camposTabela] = resultado
         reply.status(200).send(dados)
     }
@@ -46,8 +46,8 @@ app.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
     reply.send("Fastify Funcionando")
 })
 
-app.post('/estudantes', async (request: FastifyRequest, reply: FastifyReply) => {
-    const {id, nome} = request.body as any 
+app.post('/maquiagem', async (request: FastifyRequest, reply: FastifyReply) => {
+    const {id, nome_produto, quantidade_produto, validade} = request.body as any 
     try {
         const conn =  await mysql.createConnection({
             host: "localhost",
@@ -56,7 +56,7 @@ app.post('/estudantes', async (request: FastifyRequest, reply: FastifyReply) => 
             database: 'banco1023a',
             port: 3306
         })
-        const resultado =  await conn.query("INSERT INTO estudantes (id,nome) VALUES (?,?)")
+        const resultado =  await conn.query("INSERT INTO estudantes (id,nome_produto, quantidade_produto, validade) VALUES (?,?)")
         const [dados, camposTabela] = resultado
         reply.status(200).send(dados)
     }

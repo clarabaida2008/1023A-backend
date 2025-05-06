@@ -4,27 +4,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Estudante</title>
+    <title>Cadastrar Maquiagem</title>
 </head>
 
 <body>
     <form onsubmit="event.preventDefault();trataform()">
         <label for="id">id</label>
         <input type="text" id="id" name="id">
-        <label for="nome">nome</label>
-        <input type="text" id="nome" name="nome">
+
+        <label for="nome_produto">nome_produto</label>
+        <input type="text" id="nome_produto" name="nome_produto">
+
+        <label for="quantidade_produto">quantidade_produto</label>
+        <input type="text" id="quantidade_produto" name="quantidade_produto">
+
+        <label for="validade">validade</label>
+        <input type="date" id="validade" name="validade">
+
         <input type="submit" value="Cadastrar">
     </form>
+    
     <script>
         async function trataform() {
             const inputId = document.getElementById("id")
-            const inputNome = document.getElementById("nome")
+            const inputNome = document.getElementById("nome_produto")
+            const inputQuantidade = document.getElementById("quantidade_produto")
+            const inputValidade = document.getElementById("validade")
+            
             const id = inputId.value
-            const nome = inputNome.value
+            const nome_produto = inputNome.value
+            const quantidade_produto = inputQuantidade.value
+            const validade = inputValidade.value
 
             const objEstudante = {
                 id,
-                nome
+                nome_produto,
+                quantidade_produto,
+                validade
             }
             try{
                 const resposta = await fetch("http://localhost:8000/estudantes",{
@@ -32,11 +48,11 @@
                         'Content-Type': 'application/json'
                     },
                     method:"POST",
-                    body: JSON.stringify(objEstudante)
+                    body: JSON.stringify(objMaquiagem)
                 })
 
                 if (resposta.status === 200) {
-                    alert("Estudante cadatrado com sucesso!")
+                    alert("Maquiagem cadastrada com sucesso!")
                 } 
                 if (resposta.status === 404) {
                     alert("Erro não identificado.")
