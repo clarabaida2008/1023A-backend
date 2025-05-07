@@ -5,55 +5,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Maquiagem</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanchenjunga:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 20px;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background-color: rgb(221, 160, 221);
+            flex-direction: column;
+            justify-content: center;
+            color: rgb(186, 85, 211);
+            font-family: "Kanchenjunga", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        input {
+            border: 3px groove rgb(186, 85, 211);
+            background-color: rgb(255, 225, 255);
+            outline: none;
+            height: 40px;
+            vertical-align: middle;
+            border-radius: 22px;
+            width: 220px;
+            box-sizing: border-box;
+            padding: 0 18px;
+            font-family: "Kanchenjunga", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            color: rgb(186, 85, 211);
+        }
+
+        #botao input {
+            background-color: rgb(250, 198, 250);
+            color: rgb(186, 85, 211);
+            font-size: medium;
+            
+        }
+        
+        #botao input:hover {
+            background-color: rgb(231, 71, 226);
+            color: white;
+
+        }
+
+        #caixa {
+            padding: 3%;
+            border: 3px groove rgb(186, 85, 211);
+            border-radius: 20px;
+            background-color: rgb(255, 225, 255);
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 0%;
+        }
+    </style>
+
 </head>
 
 <body>
-    <form onsubmit="event.preventDefault();trataform()">
-        <label for="id">id</label>
-        <input type="text" id="id" name="id">
+    <div id=caixa>
+        <h2>CADASTRO</h2>
+        <form onsubmit="event.preventDefault();trataform()">
+            <label for="id">ID</label>
+            <input type="text" id="id" name="id"><br>
 
-        <label for="nome_produto">nome_produto</label>
-        <input type="text" id="nome_produto" name="nome_produto">
+            <label for="nome_produto">Produto</label>
+            <input type="text" id="nome_produto" name="nome_produto"><br>
 
-        <label for="quantidade_produto">quantidade_produto</label>
-        <input type="text" id="quantidade_produto" name="quantidade_produto">
+            <label for="quantidade_produto">Quantidade</label>
+            <input type="text" id="quantidade_produto" name="quantidade_produto"><br>
 
-        <label for="validade">validade</label>
-        <input type="date" id="validade" name="validade">
+            <label for="validade">Validade</label>
+            <input type="date" id="validade" name="validade"><br>
 
-        <input type="submit" value="Cadastrar">
-    </form>
-    
+            <div id="botao"><input type="submit" value="CADASTRAR"></div>
+        </form>
+    </div>
+
+
     <script>
         async function trataform() {
             const inputId = document.getElementById("id")
             const inputNome = document.getElementById("nome_produto")
             const inputQuantidade = document.getElementById("quantidade_produto")
             const inputValidade = document.getElementById("validade")
-            
+
             const id = inputId.value
             const nome_produto = inputNome.value
             const quantidade_produto = inputQuantidade.value
             const validade = inputValidade.value
 
-            const objEstudante = {
+            const objMaqugiagem = {
                 id,
                 nome_produto,
                 quantidade_produto,
                 validade
             }
-            try{
-                const resposta = await fetch("http://localhost:8000/maquiagem",{
-                    headers:{
+            console.log()
+            try {
+                const resposta = await fetch("http://localhost:8000/maquiagem", {
+                    headers: {
                         'Content-Type': 'application/json'
                     },
-                    method:"POST",
-                    body: JSON.stringify(objMaquiagem)
+                    method: "POST",
+                    body: JSON.stringify(objMaqugiagem)
                 })
 
                 if (resposta.status === 200) {
                     alert("Maquiagem cadastrada com sucesso!")
-                } 
+                }
                 if (resposta.status === 404) {
                     alert("Erro não identificado.")
                 }
@@ -61,9 +134,9 @@
                     alert("Erro do lado do backend:\n" + dados.mensagem)
                 }
 
-            }catch(erro){
-                alert("Erro: Erro na requisição do FETCH\n"+
-                 "Você ligou o BACKEND com npm run dev?")
+            } catch (erro) {
+                alert("Erro: Erro na requisição do FETCH\n" +
+                    "Você ligou o BACKEND com npm run dev?")
             }
         }
     </script>

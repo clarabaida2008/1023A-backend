@@ -53,7 +53,7 @@ app.post('/maquiagem', async (request: FastifyRequest, reply: FastifyReply) => {
             database: 'banco1023a',
             port: 3306
         })
-        const resultado =  await conn.query("INSERT INTO estudantes (id,nome_produto, quantidade_produto, validade) VALUES (?,?)")
+        const resultado =  await conn.query("INSERT INTO maquiagem (id,nome_produto, quantidade_produto, validade) VALUES (?,?,?,?)")
         const [dados, camposTabela] = resultado
         reply.status(200).send(dados)
     }

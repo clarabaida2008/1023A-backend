@@ -1,44 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maquiagem</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanchenjunga:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
     <style>
         body {
-        margin: 20px;
-        font-family: sans-serif;
-        width: 100%;
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        background-color: rgb(221,160,221);
-        flex-direction: column;
-        justify-content: center;
+            margin: 20px;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background-color: rgb(221, 160, 221);
+            flex-direction: column;
+            justify-content: center;
+            font-family: "Kanchenjunga", sans-serif;
+            font-weight: 400;
+            font-style: normal;
         }
+
         h1 {
 
-            color: rgb(230,230,250);
+            color: rgb(230, 230, 250);
         }
+
         a {
-            color: rgb(230,230,250);
+            color: rgb(230, 230, 250);
             text-decoration: none;
             font-size: larger;
         }
+
+        #botao {
+            padding: 8px;
+            background-color: rgb(218, 112, 214);
+            border-radius: 30px;
+            padding-left: 15px;
+            padding-right: 15px;
+            border: 3px groove rgb(186, 85, 211);
+        }
     </style>
 </head>
+
 <body>
     <h1>LISTA DE MAQUIAGEM</h1>
-    <div></div> <a href="./cadastro.html">CADASTRE UMA MAQUIAGEM</a>
+    <div id="botao"><a href="./cadastro.html">CADASTRE UMA MAQUIAGEM</a></div>
 
     <ul id="minhalista">
 
     </ul>
     <script>
-        async function buscaDados(){
+        async function buscaDados() {
             const resposta = await fetch("http://localhost:8001/maquiagem")
             console.log(resposta)
-            if(resposta.status ===200){
+            if (resposta.status === 200) {
                 const dados = await resposta.json()
                 console.log(dados)
                 console.log(dados[0].nome)
@@ -53,12 +72,12 @@
                 //Criem li a partir do vetor dados
                 //Coloque o texto que vem do banco no li
                 //Adicione o li na ul com id "minhalista" 
-            }else{
-                if(resposta.status ===400){
+            } else {
+                if (resposta.status === 400) {
                     const dados = await resposta.json()
                     alert(dados.mensagem)
                 }
-                else{
+                else {
                     alert("ERRO NÃO IDENTIFICADO");
                 }
             }
@@ -66,4 +85,5 @@
         buscaDados()
     </script>
 </body>
+
 </html>
