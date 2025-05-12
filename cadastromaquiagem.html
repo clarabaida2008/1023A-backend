@@ -108,7 +108,7 @@
             const quantidade_produto = inputQuantidade.value
             const validade = inputValidade.value
 
-            const objMaqugiagem = {
+            const objMaquiagem = {
                 id,
                 nome_produto,
                 quantidade_produto,
@@ -121,7 +121,7 @@
                         'Content-Type': 'application/json'
                     },
                     method: "POST",
-                    body: JSON.stringify(objMaqugiagem)
+                    body: JSON.stringify(objMaquiagem)
                 })
 
                 if (resposta.status === 200) {
