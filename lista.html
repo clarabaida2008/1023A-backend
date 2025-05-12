@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Maquiagem</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanchenjunga:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            margin: 20px;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background-color: rgb(221, 160, 221);
+            flex-direction: column;
+            justify-content: center;
+            color: rgb(186, 85, 211);
+            font-family: "Kanchenjunga", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id=caixa>
+        <h2>CADASTRO</h2>
+        <form onsubmit="event.preventDefault();trataform()">
+            <label for="id">ID</label>
+            <input type="text" id="id" name="id"><br>
+
+            <label for="nome_produto">Produto</label>
+            <input type="text" id="nome_produto" name="nome_produto"><br>
+
+            <label for="quantidade_produto">Quantidade</label>
+            <input type="text" id="quantidade_produto" name="quantidade_produto"><br>
+
+            <label for="validade">Validade</label>
+            <input type="date" id="validade" name="validade"><br>
+
+            <div id="botao"><input type="submit" value="CADASTRAR"></div>
+        </form>
+    </div>
+
+
+    <script>
+        async function trataform() {
+            const inputId = document.getElementById("id")
+            const inputNome = document.getElementById("nome_produto")
+            const inputQuantidade = document.getElementById("quantidade_produto")
+            const inputValidade = document.getElementById("validade")
+
+            const id = inputId.value
+            const nome_produto = inputNome.value
+            const quantidade_produto = inputQuantidade.value
+            const validade = inputValidade.value
+
+            const objMaqugiagem = {
+                id,
+                nome_produto,
+                quantidade_produto,
+                validade
+            }
+            console.log()
+            try {
+                const resposta = await fetch("http://localhost:8000/maquiagem", {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    body: JSON.stringify(objMaqugiagem)
+                })
+
+                if (resposta.status === 200) {
+                    alert("Maquiagem cadastrada com sucesso!")
+                }
+                if (resposta.status === 404) {
+                    alert("Erro não identificado.")
+                }
+                if (resposta.status === 400) {
+                    alert("Erro do lado do backend:\n" + dados.mensagem)
+                }
+
+            } catch (erro) {
+                alert("Erro: Erro na requisição do FETCH\n" +
+                    "Você ligou o BACKEND com npm run dev?")
+            }
+        }
+    </script>
+</body>
+
+</html>
