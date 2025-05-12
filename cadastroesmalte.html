@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Esmalte</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanchenjunga:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 20px;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            background-color: rgb(221, 160, 221);
+            flex-direction: column;
+            justify-content: center;
+            color: rgb(186, 85, 211);
+            font-family: "Kanchenjunga", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        form label {
+        align-self: flex-start;
+        margin-left: 35px;
+    }
+
+        input {
+            border: 3px groove rgb(186, 85, 211);
+            background-color: rgb(255, 225, 255);
+            outline: none;
+            height: 40px;
+            vertical-align: middle;
+            border-radius: 22px;
+            width: 220px;
+            box-sizing: border-box;
+            padding: 0 18px;
+            font-family: "Montserrat", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            color: rgb(186, 85, 211);
+        }
+
+        #botao input {
+            background-color: rgb(250, 198, 250);
+            color: rgb(186, 85, 211);
+            font-size: medium;
+            
+        }
+        
+        #botao input:hover {
+            background-color: rgb(231, 71, 226);
+            color: white;
+
+        }
+
+        #caixa {
+            padding: 3%;
+            border: 3px groove rgb(186, 85, 211);
+            border-radius: 20px;
+            background-color: rgb(255, 225, 255);
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 0%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id=caixa>
+        <h2>CADASTRO DE ESMALTE</h2>
+        <form onsubmit="event.preventDefault();trataform()">
+            <label for="id_esmalte">ID Esmalte</label>
+            <input type="text" id="id_esmalte" name="id_esmalte"><br>
+
+            <label for="nome_cor">Cor</label>
+            <input type="text" id="nome_cor" name="nome_cor"><br>
+
+            <label for="marca">Marca</label>
+            <input type="text" id="marca" name="marca"><br>
+
+            <label for="data_fabricacao">Fabricação</label>
+            <input type="date" id="data_fabricacao" name="data_fabricacao"><br>
+
+            <div id="botao"><input type="submit" value="CADASTRAR"></div>
+        </form>
+    </div>
+
+
+    <script>
+        async function trataform() {
+            const inputIdEsmalte = document.getElementById("id_esmalte")
+            const inputCor = document.getElementById("nome_cor")
+            const inputMarca = document.getElementById("marca")
+            const inputFabricacao = document.getElementById("data_fabricacao")
+
+            const id_esmalte = inputIdEsmalte.value
+            const nome_cor = inputCor.value
+            const marca = inputMarca.value
+            const data_fabricacao = inputFabricacao.value
+
+            const objEsmalte = {
+                id_esmalte,
+                nome_cor,
+                marca,
+                data_fabricacao
+            }
+            console.log()
+            try {
+                const resposta = await fetch("http://localhost:8000/esmalte", {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    body: JSON.stringify(objEsmalte)
+                })
+
+                if (resposta.status === 200) {
+                    alert("Esmalte cadastrado com sucesso!")
+                }
+                if (resposta.status === 404) {
+                    alert("Erro não identificado.")
+                }
+                if (resposta.status === 400) {
+                    alert("Erro do lado do backend:\n" + dados.mensagem)
+                }
+
+            } catch (erro) {
+                alert("Erro: Erro na requisição do FETCH\n" +
+                    "Você ligou o BACKEND com npm run dev?")
+            }
+        }
+    </script>
+</body>
+
+</html>
