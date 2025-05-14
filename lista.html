@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Maquiagem</title>
+    <title>Listar Produtos</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanchenjunga:wght@400;500;600;700&display=swap"
@@ -15,69 +15,107 @@
             width: 100%;
             height: 100vh;
             display: flex;
-            align-items: center;
             background-color: rgb(221, 160, 221);
             flex-direction: column;
-            justify-content: center;
             color: rgb(186, 85, 211);
             font-family: "Kanchenjunga", sans-serif;
             font-weight: 400;
-            font-style: normal;
+            font-style: normFal;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        table {
+            border: 3px groove rgb(186, 85, 211);
+            background-color: rgb(226, 197, 238);
+            width: 500px;
+        }
+
+        thead {
+            background-color: rgb(186, 85, 211);
+            color: rgb(226, 197, 238);
         }
     </style>
 
 </head>
 
 <body>
-    <div id=caixa>
-        <h2>MAQUIAGENS CADASTRADAS</h2>
-        
-    </div>
+    <h2>MAQUIAGENS CADASTRADAS</h2>
+    <table id="tabela_maquiagem">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Validade</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <h2>ESMALTES CADASTRADOS</h2>
+    <table id="tabela_esmalte">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cor</th>
+                <th>Marca</th>
+                <th>Data de Fabricação</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 
 
     <script>
-        async function trataform() {
-            const inputId = document.getElementById("id")
-            const inputNome = document.getElementById("nome_produto")
-            const inputQuantidade = document.getElementById("quantidade_produto")
-            const inputValidade = document.getElementById("validade")
-
-            const id = inputId.value
-            const nome_produto = inputNome.value
-            const quantidade_produto = inputQuantidade.value
-            const validade = inputValidade.value
-
-            const objMaqugiagem = {
-                id,
-                nome_produto,
-                quantidade_produto,
-                validade
-            }
-            console.log()
+        async function buscaDados() {
             try {
-                const resposta = await fetch("http://localhost:8000/maquiagem", {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    method: "POST",
-                    body: JSON.stringify(objMaqugiagem)
-                })
+                // Buscar dados de maquiagens
+                const respostaMaquiagem = await fetch("http://localhost:8001/maquiagem");
+                if (respostaMaquiagem.status === 200) {
+                    const maquiagens = await respostaMaquiagem.json();
+                    const tabelaMaquiagem = document.querySelector("#tabela_maquiagem tbody");
+                    maquiagens.forEach(maquiagem => {
+                        const linha = document.createElement("tr");
+                        linha.innerHTML = `
+                            <td>${maquiagem.id}</td>
+                            <td>${maquiagem.produto}</td>
+                            <td>${maquiagem.quantidade}</td>
+                            <td>${maquiagem.validade}</td>
+                        `;
+                        tabelaMaquiagem.appendChild(linha);
+                    });
+                } else {
+                    console.error("Erro ao buscar maquiagens:", respostaMaquiagem.status);
+                }
 
-                if (resposta.status === 200) {
-                    alert("Maquiagem cadastrada com sucesso!")
+                // Buscar dados de esmaltes
+                const respostaEsmalte = await fetch("http://localhost:8001/esmalte");
+                if (respostaEsmalte.status === 200) {
+                    const esmaltes = await respostaEsmalte.json();
+                    const tabelaEsmalte = document.querySelector("#tabela_esmalte tbody");
+                    esmaltes.forEach(esmalte => {
+                        const linha = document.createElement("tr");
+                        linha.innerHTML = `
+                            <td>${esmalte.id}</td>
+                            <td>${esmalte.cor}</td>
+                            <td>${esmalte.marca}</td>
+                            <td>${esmalte.dataFabricacao}</td>
+                        `;
+                        tabelaEsmalte.appendChild(linha);
+                    });
+                } else {
+                    console.error("Erro ao buscar esmaltes:", respostaEsmalte.status);
                 }
-                if (resposta.status === 404) {
-                    alert("Erro não identificado.")
-                }
-                if (resposta.status === 400) {
-                    alert("Erro do lado do backend:\n" + dados.mensagem)
-                }
-
-            } catch (erro) {
-                alert("Erro: Erro na requisição do FETCH\n" +
-                    "Você ligou o BACKEND com npm run dev?")
+            } catch (error) {
+                console.error("Erro ao buscar dados:", error);
             }
         }
+
+        buscaDados();
     </script>
 </body>
 

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Maquiagem</title>
+    <title>Cadastrar Maquiagem </title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanchenjunga:wght@400;500;600;700&display=swap"
@@ -51,11 +51,11 @@
             background-color: rgb(250, 198, 250);
             color: rgb(186, 85, 211);
             font-size: medium;
-            
+
         }
-        
+
         #botao input:hover {
-            background-color: rgb(231, 71, 226);
+            background-color: rgb(186, 85, 211);
             color: white;
 
         }
@@ -79,8 +79,8 @@
     <div id=caixa>
         <h2>CADASTRO</h2>
         <form onsubmit="event.preventDefault();trataform()">
-            <label for="id">ID</label>
-            <input type="text" id="id" name="id"><br>
+            <label for="id_maquiagem">ID</label>
+            <input type="text" id="id_maquiagem" name="id_maquiagem"><br>
 
             <label for="nome_produto">Produto</label>
             <input type="text" id="nome_produto" name="nome_produto"><br>
@@ -98,45 +98,49 @@
 
     <script>
         async function trataform() {
-            const inputId = document.getElementById("id")
-            const inputNome = document.getElementById("nome_produto")
-            const inputQuantidade = document.getElementById("quantidade_produto")
-            const inputValidade = document.getElementById("validade")
+            const inputId_maquiagem = document.getElementById("id_maquiagem");
+            const inputNome = document.getElementById("nome_produto");
+            const inputQuantidade = document.getElementById("quantidade_produto");
+            const inputValidade = document.getElementById("validade");
 
-            const id = inputId.value
-            const nome_produto = inputNome.value
-            const quantidade_produto = inputQuantidade.value
-            const validade = inputValidade.value
+            const id_maquiagem = inputId_maquiagem.value;
+            const nome_produto = inputNome.value;
+            const quantidade_produto = inputQuantidade.value;
+            const validade = inputValidade.value;
 
-            const objMaqugiagem = {
-                id,
+            // Validação dos campos
+            if (!id_maquiagem || !nome_produto || !quantidade_produto || !validade) {
+                alert("Por favor, preencha todos os campos.");
+                return;
+            }
+
+            const objMaquiagem = {
+                id_maquiagem,
                 nome_produto,
                 quantidade_produto,
                 validade
-            }
-            console.log()
+            };
+
             try {
                 const resposta = await fetch("http://localhost:8000/maquiagem", {
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     method: "POST",
-                    body: JSON.stringify(objMaqugiagem)
-                })
+                    body: JSON.stringify(objMaquiagem)
+                });
 
                 if (resposta.status === 200) {
-                    alert("Maquiagem cadastrada com sucesso!")
+                    alert("Maquiagem cadastrada com sucesso!");
+                } else if (resposta.status === 404) {
+                    alert("Erro não identificado.");
+                } else if (resposta.status === 400) {
+                    const dados = await resposta.json();
+                    alert("Erro do lado do backend:\n" + dados.mensagem);
                 }
-                if (resposta.status === 404) {
-                    alert("Erro não identificado.")
-                }
-                if (resposta.status === 400) {
-                    alert("Erro do lado do backend:\n" + dados.mensagem)
-                }
-
             } catch (erro) {
                 alert("Erro: Erro na requisição do FETCH\n" +
-                    "Você ligou o BACKEND com npm run dev?")
+                    "Você ligou o BACKEND com npm run dev?");
             }
         }
     </script>
