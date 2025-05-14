@@ -20,7 +20,7 @@
             color: rgb(186, 85, 211);
             font-family: "Kanchenjunga", sans-serif;
             font-weight: 400;
-            font-style: normFal;
+            font-style: normal;
             align-items: center;
             justify-content: center;
             text-align: center;
@@ -35,6 +35,19 @@
         thead {
             background-color: rgb(186, 85, 211);
             color: rgb(226, 197, 238);
+        }
+
+        #atualizarLista {
+            font-family: "Kanchenjunga", sans-serif;
+            margin: 40px 0 0 0;
+            padding: 10px 20px;
+            background: rgb(186, 85, 211);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            align-self: center;
         }
     </style>
 
@@ -69,15 +82,17 @@
         </tbody>
     </table>
 
+    <button id="atualizarLista">Atualizar Lista</button>
 
     <script>
         async function buscaDados() {
             try {
-                // Buscar dados de maquiagens
-                const respostaMaquiagem = await fetch("http://localhost:8001/maquiagem");
+              
+                const respostaMaquiagem = await fetch("http://localhost:8001aquiagem");
                 if (respostaMaquiagem.status === 200) {
                     const maquiagens = await respostaMaquiagem.json();
                     const tabelaMaquiagem = document.querySelector("#tabela_maquiagem tbody");
+                    tabelaMaquiagem.innerHTML = ""; 
                     maquiagens.forEach(maquiagem => {
                         const linha = document.createElement("tr");
                         linha.innerHTML = `
@@ -92,11 +107,12 @@
                     console.error("Erro ao buscar maquiagens:", respostaMaquiagem.status);
                 }
 
-                // Buscar dados de esmaltes
-                const respostaEsmalte = await fetch("http://localhost:8001/esmalte");
+               
+                const respostaEsmalte = await fetch("http://localhost:8001smalte");
                 if (respostaEsmalte.status === 200) {
                     const esmaltes = await respostaEsmalte.json();
                     const tabelaEsmalte = document.querySelector("#tabela_esmalte tbody");
+                    tabelaEsmalte.innerHTML = ""; 
                     esmaltes.forEach(esmalte => {
                         const linha = document.createElement("tr");
                         linha.innerHTML = `
@@ -115,6 +131,7 @@
             }
         }
 
+        document.getElementById('atualizarLista').addEventListener('click', buscaDados);
         buscaDados();
     </script>
 </body>

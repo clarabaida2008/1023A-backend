@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
@@ -7,55 +7,127 @@
     <title>Maquiagem</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanchenjunga:wght@400;500;600;700&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
         rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            margin: 20px;
-            width: 100%;
-            height: 100vh;
+            font-family: "Lato", sans-serif;
+            background: linear-gradient(135deg, #d8bfd8, #dda0dd, #ee82ee);
+            min-height: 100vh;
             display: flex;
-            align-items: center;
-            background-color: rgb(221, 160, 221);
             flex-direction: column;
+            align-items: center;
             justify-content: center;
-            font-family: "Kanchenjunga", sans-serif;
-            font-weight: 400;
-            font-style: normal;
-            gap: 20px;
+            padding: 2rem;
+            color: #fff;
+            text-align: center;
         }
 
         h1 {
-            margin-bottom: 0px;
-            color: rgb(230, 230, 250);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
         }
 
-        a {
-            color: rgb(230, 230, 250);
-            text-decoration: none;
-            font-size: larger;
+        /* Container de Botões */
+        .botoes-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
         }
 
+        /* Estilo dos Botões */
         .botao {
-            padding: 8px;
-            background-color: rgb(218, 112, 214);
-            border-radius: 30px;
-            padding-left: 15px;
-            padding-right: 15px;
-            border: 3px groove rgb(186, 85, 211);
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 280px;
+            text-decoration: none;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 500;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .botao:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Lista de Produtos */
+        #minhalista {
+            list-style: none;
+            width: 80%;
+            max-width: 600px;
+            margin-top: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        #minhalista li {
+            padding: 0.8rem;
+            margin-bottom: 0.5rem;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+        }
+
+        #minhalista li:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateX(5px);
+        }
+
+        #minhalista:empty {
+            display: none;
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .botao {
+                width: 220px;
+                padding: 10px 20px;
+            }
+
+            #minhalista {
+                width: 95%;
+                padding: 1rem;
+            }
         }
     </style>
 </head>
 
 <body>
     <h1>LOJA DE COSMÉTICOS</h1>
-    <div class="botao"><a href="./cadastromaquiagem.html">CADASTRE UMA MAQUIAGEM</a></div>
-    <div class="botao"><a href="./cadastroesmalte.html">CADASTRE UM ESMALTE</a></div>
-    <div class="botao"><a href="./lista.html">PRODUTOS CADASTRADAS</a></div>
+    <div class="botoes-container">
+        <a class="botao" href="./cadastromaquiagem.html">CADASTRE UMA MAQUIAGEM</a>
+        <a class="botao" href="./cadastroesmalte.html">CADASTRE UM ESMALTE</a>
+        <a class="botao" href="./lista.html">PRODUTOS CADASTRADOS</a>
+    </div>
 
-    <ul id="minhalista">
+    <ul id="minhalista"></ul>
 
-    </ul>
     <script>
         async function buscaDados() {
             const resposta = await fetch("http://localhost:8001/maquiagem")
@@ -71,10 +143,6 @@
                     novoli.innerText = element.nome
                     ul.appendChild(novoli)
                 }
-
-                //Criem li a partir do vetor dados
-                //Coloque o texto que vem do banco no li
-                //Adicione o li na ul com id "minhalista" 
             } else {
                 if (resposta.status === 400) {
                     const dados = await resposta.json()
