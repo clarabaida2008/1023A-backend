@@ -22,6 +22,7 @@ app.get('/maquiagem', async (request: FastifyRequest, reply: FastifyReply) => {
         const [dados, camposTabela] = resultado
         reply.status(200).send(dados)
     }
+
     catch (erro: any) {
         if (erro.code === 'ECONNREFUSED') {
             console.log("ERRO: LIGUE O LARAGAO => Conexão Recusada")
@@ -56,7 +57,7 @@ app.post('/maquiagem', async (request: FastifyRequest, reply: FastifyReply) => {
             database: 'banco1023a',
             port: 3306
         })
-        const resultado = await conn.query("INSERT INTO maquiagem (id_maquiagem,nome_produto,quantidade_produto,validade) VALUES (?,?,?,?)",[id_maquiagem,nome_produto,quantidade_produto,validade])
+        const resultado = await conn.query("INSERT INTO maquiagem (id_maquiagem,nome_produto,quantidade_produto,validade) VALUES (?,?,?,?)", [id_maquiagem, nome_produto, quantidade_produto, validade])
         const [dados, camposTabela] = resultado
         reply.status(200).send(dados)
     }
@@ -137,7 +138,7 @@ app.post('/esmalte', async (request: FastifyRequest, reply: FastifyReply) => {
             database: 'banco1023a',
             port: 3306
         })
-        const resultado = await conn.query("INSERT INTO esmalte (id_esmalte,nome_cor,marca,data_fabricacao) VALUES (?,?,?,?)",[id_esmalte,nome_cor,marca,data_fabricacao])
+        const resultado = await conn.query("INSERT INTO esmalte (id_esmalte,nome_cor,marca,data_fabricacao) VALUES (?,?,?,?)", [id_esmalte, nome_cor, marca, data_fabricacao])
         const [dados, camposTabela] = resultado
         reply.status(200).send(dados)
     }
