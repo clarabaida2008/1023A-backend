@@ -87,8 +87,7 @@
     <script>
         async function buscaDados() {
             try {
-              
-                const respostaMaquiagem = await fetch("http://localhost:8001aquiagem");
+                const respostaMaquiagem = await fetch("http://localhost:8001/maquiagem");
                 if (respostaMaquiagem.status === 200) {
                     const maquiagens = await respostaMaquiagem.json();
                     const tabelaMaquiagem = document.querySelector("#tabela_maquiagem tbody");
@@ -96,9 +95,9 @@
                     maquiagens.forEach(maquiagem => {
                         const linha = document.createElement("tr");
                         linha.innerHTML = `
-                            <td>${maquiagem.id}</td>
-                            <td>${maquiagem.produto}</td>
-                            <td>${maquiagem.quantidade}</td>
+                            <td>${maquiagem.id_maquiagem}</td>
+                            <td>${maquiagem.nome_produto}</td>
+                            <td>${maquiagem.quantidade_produto}</td>
                             <td>${maquiagem.validade}</td>
                         `;
                         tabelaMaquiagem.appendChild(linha);
@@ -107,8 +106,7 @@
                     console.error("Erro ao buscar maquiagens:", respostaMaquiagem.status);
                 }
 
-               
-                const respostaEsmalte = await fetch("http://localhost:8001smalte");
+                const respostaEsmalte = await fetch("http://localhost:8001/esmalte");
                 if (respostaEsmalte.status === 200) {
                     const esmaltes = await respostaEsmalte.json();
                     const tabelaEsmalte = document.querySelector("#tabela_esmalte tbody");
