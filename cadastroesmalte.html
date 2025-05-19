@@ -7,139 +7,198 @@
     <title>Cadastrar Esmalte</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanchenjunga:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            margin: 20px;
-            width: 100%;
-            height: 100vh;
+            font-family: "Lato", sans-serif;
+            background: linear-gradient(135deg, #d8bfd8, #dda0dd, #ee82ee);
+            min-height: 100vh;
             display: flex;
-            align-items: center;
-            background-color: rgb(221, 160, 221);
             flex-direction: column;
+            align-items: center;
             justify-content: center;
-            color: rgb(186, 85, 211);
-            font-family: "Kanchenjunga", sans-serif;
-            font-weight: 400;
-            font-style: normal;
+            padding: 2rem;
+            color: #fff;
+        }
+
+        #caixa {
+            width: 100%;
+            max-width: 500px;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         form {
             display: flex;
             flex-direction: column;
+            gap: 1.2rem;
+        }
 
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #fff;
+            font-weight: 500;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         input {
-            border: 3px groove rgb(186, 85, 211);
-            background-color: rgb(255, 225, 255);
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 1rem;
             outline: none;
-            height: 40px;
-            vertical-align: middle;
-            border-radius: 22px;
-            width: 220px;
-            box-sizing: border-box;
-            padding: 0 18px;
-            font-family: "Kanchenjunga", sans-serif;
-            font-weight: 400;
-            font-style: normal;
-            color: rgb(186, 85, 211);
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.4);
+            border-color: #fff;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
         }
 
         #botao input {
-            background-color: rgb(250, 198, 250);
-            color: rgb(186, 85, 211);
-            font-size: medium;
-
+            background: rgba(255, 255, 255, 0.3);
+            color: #fff;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
         }
 
         #botao input:hover {
-            background-color: rgb(231, 71, 226);
-            color: white;
-
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
         }
 
-        #caixa {
-            padding: 3%;
-            border: 3px groove rgb(186, 85, 211);
-            border-radius: 20px;
-            background-color: rgb(255, 225, 255);
-        }
-
-        h2 {
-            text-align: center;
-            margin-top: 0%;
+        /* Responsividade */
+        @media (max-width: 600px) {
+            #caixa {
+                padding: 1.5rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            input {
+                padding: 0.7rem 1rem;
+            }
         }
     </style>
-
 </head>
 
 <body>
-    <div id=caixa>
-        <h2>CADASTRO ESMALTE</h2>
+    <div id="caixa">
+        <h2>CADASTRO DE ESMALTE</h2>
         <form onsubmit="event.preventDefault();trataform()">
-            <label for="id_esmalte">ID ESMALTE</label>
-            <input type="text" id="id_esmalte" name="id_esmalte"><br>
+            <div>
+                <label for="id_esmalte">ID Esmalte</label>
+                <input type="text" id="id_esmalte" name="id_esmalte" placeholder="Digite o ID">
+            </div>
 
-            <label for="nome_cor">Cor</label>
-            <input type="text" id="nome_cor" name="nome_cor"><br>
+            <div>
+                <label for="nome_cor">Cor</label>
+                <input type="text" id="nome_cor" name="nome_cor" placeholder="Nome da cor">
+            </div>
 
-            <label for="marca">Marca</label>
-            <input type="text" id="marca" name="marca"><br>
+            <div>
+                <label for="marca">Marca</label>
+                <input type="text" id="marca" name="marca" placeholder="Marca do esmalte">
+            </div>
 
-            <label for="data_fabricacao">Data de Fabricacao</label>
-            <input type="date" id="data_fabricacao" name="data_fabricacao"><br>
+            <div>
+                <label for="data_fabricacao">Data de Fabricação</label>
+                <input type="date" id="data_fabricacao" name="data_fabricacao">
+            </div>
 
-            <div id="botao"><input type="submit" value="CADASTRAR"></div>
+            <div id="botao">
+                <input type="submit" value="CADASTRAR">
+            </div>
         </form>
     </div>
 
-
     <script>
         async function trataform() {
-            const inputId_esmalte = document.getElementById("id_esmalte")
-            const inputCor = document.getElementById("nome_cor")
-            const inputMarca = document.getElementById("marca")
-            const inputFabricacao = document.getElementById("data_fabricacao")
+            const inputId_esmalte = document.getElementById("id_esmalte");
+            const inputCor = document.getElementById("nome_cor");
+            const inputMarca = document.getElementById("marca");
+            const inputFabricacao = document.getElementById("data_fabricacao");
 
-            const id_esmalte = inputId_esmalte.value
-            const nome_cor = inputCor.value
-            const marca = inputMarca.value
-            const data_fabricacao = inputFabricacao.value
+            const id_esmalte = inputId_esmalte.value;
+            const nome_cor = inputCor.value;
+            const marca = inputMarca.value;
+            const data_fabricacao = inputFabricacao.value;
+
+            // Validação dos campos
+            if (!id_esmalte || !nome_cor || !marca || !data_fabricacao) {
+                alert("Por favor, preencha todos os campos.");
+                return;
+            }
 
             const objEsmalte = {
                 id_esmalte,
                 nome_cor,
                 marca,
                 data_fabricacao
-            }
-            console.log()
+            };
+
             try {
-                const resposta = await fetch("http://localhost:8000/esmalte", {
+                const resposta = await fetch("http://localhost:8001/esmalte", {
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     method: "POST",
                     body: JSON.stringify(objEsmalte)
-                })
+                });
 
                 if (resposta.status === 200) {
-                    alert("Esmalte cadastrado com sucesso!")
+                    alert("Esmalte cadastrado com sucesso!");
+                    // Limpa os campos após cadastro
+                    inputId_esmalte.value = '';
+                    inputCor.value = '';
+                    inputMarca.value = '';
+                    inputFabricacao.value = '';
+                } else if (resposta.status === 404) {
+                    alert("Erro não identificado.");
+                } else if (resposta.status === 400) {
+                    const dados = await resposta.json();
+                    alert("Erro do lado do backend:\n" + dados.mensagem);
                 }
-                if (resposta.status === 404) {
-                    alert("Erro não identificado.")
-                }
-                if (resposta.status === 400) {
-                    alert("Erro do lado do backend:\n" + dados.mensagem)
-                }
-
             } catch (erro) {
                 alert("Erro: Erro na requisição do FETCH\n" +
-                    "Você ligou o BACKEND com npm run dev?")
+                    "Você ligou o BACKEND com npm run dev?");
             }
         }
     </script>
 </body>
-
 </html>

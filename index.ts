@@ -170,7 +170,7 @@ app.post('/esmalte', async (request: FastifyRequest, reply: FastifyReply) => {
 })
 
 
-app.listen({ port: 8000 }, (err, address) => {
+app.listen({ port: 8001 }, (err, address) => {
     if (err) {
         console.error(err)
         process.exit(1)
