@@ -126,8 +126,6 @@
         <a class="botao" href="./lista.html">PRODUTOS CADASTRADOS</a>
     </div>
 
-    <ul id="minhalista"></ul>
-
     <script>
         async function buscaDados() {
             const resposta = await fetch("http://localhost:8001/maquiagem")
@@ -140,7 +138,7 @@
                 for (let i = 0; i < dados.length; i++) {
                     const element = dados[i];
                     const novoli = document.createElement("li")
-                    novoli.innerText = element.nome
+                    novoli.innerText = element.nome_produto
                     ul.appendChild(novoli)
                 }
             } else {
