@@ -95,12 +95,12 @@
                     maquiagens.forEach(maquiagem => {
                         const linha = document.createElement("tr");
                         // Extrai apenas a data (YYYY-MM-DD) de validade
-                        const validade = maquiagem.validade ? maquiagem.validade.split('T')[0] : '';
+                        const dataValidade = maquiagem.validade ? maquiagem.validade.split('T')[0] : '';
                         linha.innerHTML = `
                             <td>${maquiagem.id_maquiagem}</td>
                             <td>${maquiagem.nome_produto}</td>
                             <td>${maquiagem.quantidade_produto}</td>
-                            <td>${validade}</td>
+                            <td>${dataValidade}</td>
                         `;
                         tabelaMaquiagem.appendChild(linha);
                     });
@@ -115,11 +115,11 @@
                     tabelaEsmalte.innerHTML = ""; 
                     esmaltes.forEach(esmalte => {
                         const linha = document.createElement("tr");
-                        // Extrai apenas a data (YYYY-MM-DD) de data de fabricação
-                        const dataFabricacao = esmalte.dataFabricacao ? esmalte.dataFabricacao.split('T')[0] : '';
+                           // Extrai apenas a data (YYYY-MM-DD) de data de fabricação
+                        const dataFabricacao = esmalte.data_fabricacao ? esmalte.data_fabricacao.split('T')[0] : '';
                         linha.innerHTML = `
-                            <td>${esmalte.id}</td>
-                            <td>${esmalte.cor}</td>
+                            <td>${esmalte.id_esmalte}</td>
+                            <td>${esmalte.nome_cor}</td>
                             <td>${esmalte.marca}</td>
                             <td>${dataFabricacao}</td>
                         `;

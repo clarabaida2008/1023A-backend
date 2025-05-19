@@ -4,12 +4,15 @@ import cors from '@fastify/cors'
 const app = fastify()
 app.register(cors)
 
+//VERIFICAÇÃO PARA VER SE O BACKEND ESTÁ FUNCIONANDO
 app.get('/', async (request: FastifyRequest, reply: FastifyReply) => {
     reply.send("Fastify Funcionando")
 })
 
+//PARTE DA MAQUIAGEM
 app.get('/maquiagem', async (request: FastifyRequest, reply: FastifyReply) => {
 
+    //FAZ A CONEXÃO COM O BANCO DE DADOS E RETORNA OS DADOS DA TABELA MAQUIAGEM
     try {
         const conn = await mysql.createConnection({
             host: "localhost",
@@ -23,10 +26,11 @@ app.get('/maquiagem', async (request: FastifyRequest, reply: FastifyReply) => {
         reply.status(200).send(dados)
     }
 
+    //TRATAMENTO DE ERROS QUE PODEM OCORRER QUANDO O BACKEND TENTA SE CONECTAR AO BANCO DE DADOS
     catch (erro: any) {
         if (erro.code === 'ECONNREFUSED') {
-            console.log("ERRO: LIGUE O LARAGAO => Conexão Recusada")
-            reply.status(400).send({ mensagem: "ERRO: LIGUE O LARAGAO => Conexão Recusada" })
+            console.log("ERRO: LIGUE O LARAGON => Conexão Recusada")
+            reply.status(400).send({ mensagem: "ERRO: LIGUE O LARAGON => Conexão Recusada" })
         } else if (erro.code === 'ER_BAD_DB_ERROR') {
             console.log("ERRO: CRIE UM BANCO DE DADOS COM O NOME DEFINIDO NA CONEXÃO")
             reply.status(400).send({ mensagem: "ERRO: CRIE UM BANCO DE DADOS COM O NOME DEFINIDO NA CONEXÃO" })
@@ -46,9 +50,11 @@ app.get('/maquiagem', async (request: FastifyRequest, reply: FastifyReply) => {
     }
 })
 
+//CADASTRO DE UMA NOVA MAQUIAGEM NO BANCO DE DADOS
 app.post('/maquiagem', async (request: FastifyRequest, reply: FastifyReply) => {
     const { id_maquiagem, nome_produto, quantidade_produto, validade } = request.body as any
 
+    //FAZ A CONEXÃO COM O BANCO DE DADOS E INSERE OS DADOS NA TABELA MAQUIAGEM, CADASTRANDO UMA NOVA MAQUIAGEM
     try {
         const conn = await mysql.createConnection({
             host: "localhost",
@@ -61,6 +67,8 @@ app.post('/maquiagem', async (request: FastifyRequest, reply: FastifyReply) => {
         const [dados, camposTabela] = resultado
         reply.status(200).send(dados)
     }
+
+    //TRATAMENTO DE ERROS QUE PODEM OCORRER QUANDO O BACKEND TENTA SE CONECTAR AO BANCO DE DADOS
     catch (erro: any) {
         switch (erro.code) {
             case "ECONNREFUSED":
@@ -88,10 +96,13 @@ app.post('/maquiagem', async (request: FastifyRequest, reply: FastifyReply) => {
     }
 })
 
-////////////////////////////////////////////////////////////////////////////////////////////////////*
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*
+
+//PARTE DO ESMALTE
 
 app.get('/esmalte', async (request: FastifyRequest, reply: FastifyReply) => {
 
+    //FAZ A CONEXÃO COM O BANCO DE DADOS E RETORNA OS DADOS DA TABELA ESMALTE
     try {
         const conn = await mysql.createConnection({
             host: "localhost",
@@ -104,6 +115,8 @@ app.get('/esmalte', async (request: FastifyRequest, reply: FastifyReply) => {
         const [dados, camposTabela] = resultado
         reply.status(200).send(dados)
     }
+
+    //TRATAMENTO DE ERROS QUE PODEM OCORRER QUANDO O BACKEND TENTA SE CONECTAR AO BANCO DE DADOS
     catch (erro: any) {
         if (erro.code === 'ECONNREFUSED') {
             console.log("ERRO: LIGUE O LARAGAO => Conexão Recusada")
@@ -127,9 +140,11 @@ app.get('/esmalte', async (request: FastifyRequest, reply: FastifyReply) => {
     }
 })
 
+//CADASTRO DE UM NOVO ESMALTE NO BANCO DE DADOS
 app.post('/esmalte', async (request: FastifyRequest, reply: FastifyReply) => {
     const { id_esmalte, nome_cor, marca, data_fabricacao } = request.body as any
 
+    //FAZ A CONEXÃO COM O BANCO DE DADOS E INSERE OS DADOS NA TABELA ESMALTE, CADASTRANDO UM NOVO ESMALTE
     try {
         const conn = await mysql.createConnection({
             host: "localhost",
@@ -142,6 +157,8 @@ app.post('/esmalte', async (request: FastifyRequest, reply: FastifyReply) => {
         const [dados, camposTabela] = resultado
         reply.status(200).send(dados)
     }
+
+    //TRATAMENTO DE ERROS QUE PODEM OCORRER QUANDO O BACKEND TENTA SE CONECTAR AO BANCO DE DADOS
     catch (erro: any) {
         switch (erro.code) {
             case "ECONNREFUSED":
@@ -169,7 +186,9 @@ app.post('/esmalte', async (request: FastifyRequest, reply: FastifyReply) => {
     }
 })
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*
 
+//COMANDO QUE FAZ O BACKEND FICAR ONLINE E PRONTO PARA RECEBER AS REQUISIÇÕES
 app.listen({ port: 8001 }, (err, address) => {
     if (err) {
         console.error(err)
