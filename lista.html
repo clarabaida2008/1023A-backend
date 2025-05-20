@@ -7,80 +7,155 @@
     <title>Listar Produtos</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanchenjunga:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            margin: 20px;
-            width: 100%;
-            height: 100vh;
+            font-family: "Lato", sans-serif;
+            background: linear-gradient(135deg, #d8bfd8, #dda0dd, #ee82ee);
+            min-height: 100vh;
             display: flex;
-            background-color: rgb(221, 160, 221);
             flex-direction: column;
-            color: rgb(186, 85, 211);
-            font-family: "Kanchenjunga", sans-serif;
-            font-weight: 400;
-            font-style: normal;
             align-items: center;
-            justify-content: center;
+            padding: 2rem;
+            color: #fff;
+        }
+
+        h2 {
             text-align: center;
+            margin: 2rem 0 1rem;
+            color: #fff;
+            font-size: 1.8rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .tabela-container {
+            width: 100%;
+            max-width: 900px;
+            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
         }
 
         table {
-            border: 3px groove rgb(186, 85, 211);
-            background-color: rgb(226, 197, 238);
-            width: 500px;
+            width: 100%;
+            border-collapse: collapse;
+            color: #fff;
         }
 
         thead {
-            background-color: rgb(186, 85, 211);
-            color: rgb(226, 197, 238);
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         #atualizarLista {
-            font-family: "Kanchenjunga", sans-serif;
-            margin: 40px 0 0 0;
-            padding: 10px 20px;
-            background: rgb(186, 85, 211);
+            font-family: "Lato", sans-serif;
+            margin: 2rem 0;
+            padding: 0.8rem 2rem;
+            background: rgba(255, 255, 255, 0.3);
             color: white;
-            border: 2px solid rgb(184, 63, 214);
-            border-radius: 5px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 50px;
             font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            align-self: center;
+            transition: all 0.3s ease;
+        }
+
+        #atualizarLista:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .tabela-container {
+                padding: 1rem;
+            }
+            
+            th, td {
+                padding: 0.6rem;
+                font-size: 0.9rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .tabela-container {
+                padding: 0.5rem;
+            }
+            
+            th, td {
+                padding: 0.4rem;
+                font-size: 0.8rem;
+            }
         }
     </style>
-
 </head>
 
 <body>
     <h2>MAQUIAGENS CADASTRADAS</h2>
-    <table id="tabela_maquiagem">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Produto</th>
-                <th>Quantidade</th>
-                <th>Validade</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <div class="tabela-container">
+        <table id="tabela_maquiagem">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Validade</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 
     <h2>ESMALTES CADASTRADOS</h2>
-    <table id="tabela_esmalte">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Cor</th>
-                <th>Marca</th>
-                <th>Data de Fabricação</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <div class="tabela-container">
+        <table id="tabela_esmalte">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cor</th>
+                    <th>Marca</th>
+                    <th>Data de Fabricação</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 
     <button id="atualizarLista">Atualizar Lista</button>
 
@@ -94,7 +169,6 @@
                     tabelaMaquiagem.innerHTML = ""; 
                     maquiagens.forEach(maquiagem => {
                         const linha = document.createElement("tr");
-                        // Extrai apenas a data (YYYY-MM-DD) de validade
                         const dataValidade = maquiagem.validade ? maquiagem.validade.split('T')[0] : '';
                         linha.innerHTML = `
                             <td>${maquiagem.id_maquiagem}</td>
@@ -115,7 +189,6 @@
                     tabelaEsmalte.innerHTML = ""; 
                     esmaltes.forEach(esmalte => {
                         const linha = document.createElement("tr");
-                           // Extrai apenas a data (YYYY-MM-DD) de data de fabricação
                         const dataFabricacao = esmalte.data_fabricacao ? esmalte.data_fabricacao.split('T')[0] : '';
                         linha.innerHTML = `
                             <td>${esmalte.id_esmalte}</td>
@@ -130,6 +203,7 @@
                 }
             } catch (error) {
                 console.error("Erro ao buscar dados:", error);
+                alert("Erro ao carregar dados. Verifique o console para mais detalhes.");
             }
         }
 
@@ -137,5 +211,4 @@
         buscaDados();
     </script>
 </body>
-
 </html>

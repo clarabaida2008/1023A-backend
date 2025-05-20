@@ -11,11 +11,13 @@
         href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
         rel="stylesheet">
     <style>
+        /* ORGANIZANDO O GERAL DA PÁGINA */
         * {
             margin: 0;
             padding: 0;
         }
 
+        /* FONTE, GRADIENTE NO FUNDO, DISPOSIÇÃO DOS ITENS, COR DA FONTE E ALINHAMENTOS */
         body {
             font-family: "Lato", sans-serif;
             background: linear-gradient(135deg, #d8bfd8, #dda0dd, #ee82ee);
@@ -29,15 +31,15 @@
             text-align: center;
         }
 
+        /* TÍTULO PRINCIPAL: TAMANHO DA FONTE, MARGEM INFERIOR, SOMBRA NO TÍTULO E ESPAÇO ENTRE AS LETRAS  */
         h1 {
             font-size: 2.5rem;
             margin-bottom: 1.5rem;
-            color: #fff;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
             letter-spacing: 1px;
         }
 
-        /* Container de Botões */
+        /* CONTAINER DOS BOTÕES: DISPOSIÇÃO DOS ELEMENTOS, ESPAÇAMENTO ENTRE OS BOTÕES E MARGEM INFERIOR */
         .botoes-container {
             display: flex;
             flex-direction: column;
@@ -45,7 +47,7 @@
             margin-bottom: 2rem;
         }
 
-        /* Estilo dos Botões */
+        /* ESTILO DOS BOTÕES: ESPAÇAMENTO, ESTILIZAÇÕES DE CORES E SOMBRAS, BORDA, ETC */
         .botao {
             padding: 12px 25px;
             background: rgba(255, 255, 255, 0.2);
@@ -62,13 +64,13 @@
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
 
+        /* ESTILO DOS BOTÕES COM O CURSOR: ESTILIZAÇÕES DE CORES E SOMBRAS, BORDA, ETC */
         .botao:hover {
             transform: translateY(-3px);
             background: rgba(255, 255, 255, 0.3);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
-        /* Lista de Produtos */
         #minhalista {
             list-style: none;
             width: 80%;
@@ -99,7 +101,7 @@
             display: none;
         }
 
-        /* Responsividade */
+        /* RESPONSIVIDADE */
         @media (max-width: 600px) {
             h1 {
                 font-size: 2rem;
@@ -119,7 +121,9 @@
 </head>
 
 <body>
+    <!-- TÍTULO PRINCIPAL -->
     <h1>LOJA DE COSMÉTICOS</h1>
+    <!-- CONTAINER DOS BOTÕES DO MENU-->
     <div class="botoes-container">
         <a class="botao" href="./cadastromaquiagem.html">CADASTRE UMA MAQUIAGEM</a>
         <a class="botao" href="./cadastroesmalte.html">CADASTRE UM ESMALTE</a>
@@ -127,6 +131,7 @@
     </div>
 
     <script>
+        // BUSCA AS MAQUIAGENS CADASTRADAS E MOSTRA NA TELA, CRIANDO UMA LISTA COM O NOME DE CADA PRODUTO
         async function buscaDados() {
             const resposta = await fetch("http://localhost:8001/maquiagem")
             console.log(resposta)
