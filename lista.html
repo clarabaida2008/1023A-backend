@@ -7,7 +7,9 @@
     <title>Listar Produtos</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -91,17 +93,18 @@
             transform: translateY(-2px);
         }
 
-        /* Responsividade */
+        /* RESPONSIVIDADE */
         @media (max-width: 768px) {
             .tabela-container {
                 padding: 1rem;
             }
-            
-            th, td {
+
+            th,
+            td {
                 padding: 0.6rem;
                 font-size: 0.9rem;
             }
-            
+
             h2 {
                 font-size: 1.5rem;
             }
@@ -111,12 +114,13 @@
             body {
                 padding: 1rem;
             }
-            
+
             .tabela-container {
                 padding: 0.5rem;
             }
-            
-            th, td {
+
+            th,
+            td {
                 padding: 0.4rem;
                 font-size: 0.8rem;
             }
@@ -125,9 +129,12 @@
 </head>
 
 <body>
+    <!--TÍTULO MAQUIAGENS-->
     <h2>MAQUIAGENS CADASTRADAS</h2>
+    <!--TABELA PARA INSERIR AS MAQUIAGENS CADASTRADAS NO BANCO DE DADOS-->
     <div class="tabela-container">
         <table id="tabela_maquiagem">
+            <!--TABELA PARA INSERIR AS MAQUIAGENS CADASTRADAS NO BANCO DE DADOS-->
             <thead>
                 <tr>
                     <th>ID</th>
@@ -136,14 +143,18 @@
                     <th>Validade</th>
                 </tr>
             </thead>
+            <!--CORPO DA TABELA: VAZIO POIS OS ELEMENTOS CADASTRADOS AINDA VÃO ENTRAR-->
             <tbody>
             </tbody>
         </table>
     </div>
 
+    <!--TÍTULO ESMLATES-->
     <h2>ESMALTES CADASTRADOS</h2>
+    <!--TABELA PARA INSERIR OS EMALTES CADASTRADOS NO BANCO DE DADOS-->
     <div class="tabela-container">
         <table id="tabela_esmalte">
+            <!--CABEÇALHO DA TABELA-->
             <thead>
                 <tr>
                     <th>ID</th>
@@ -152,23 +163,32 @@
                     <th>Data de Fabricação</th>
                 </tr>
             </thead>
+            <!--CORPO DA TABELA: VAZIO POIS OS ELEMENTOS CADASTRADOS AINDA VÃO ENTRAR-->
             <tbody>
             </tbody>
         </table>
     </div>
 
+    <!-- BOTÃO PARA ATUALIZAR A LISTA -->
     <button id="atualizarLista">Atualizar Lista</button>
 
     <script>
         async function buscaDados() {
             try {
+                //BUSCA AS MAQUIAGENS CADASTRADAS NO BACKEND
                 const respostaMaquiagem = await fetch("http://localhost:8001/maquiagem");
+                //VERIFICA SE A RESPOSTA DEU CERTO
                 if (respostaMaquiagem.status === 200) {
+                    //SE SIM, TRANSFORMA A RESPOSTA EM JSON, CONVERTE A RESPOSTA EM UM ARRAY DE OBJETOS (CADA OBJETO É UMA MAQUIAGEM)
                     const maquiagens = await respostaMaquiagem.json();
+                    //SELECIONA A TABELA DO HTML E LIMPA O CONTEÚDO ANTERIOR
                     const tabelaMaquiagem = document.querySelector("#tabela_maquiagem tbody");
-                    tabelaMaquiagem.innerHTML = ""; 
+                    tabelaMaquiagem.innerHTML = "";
+
+                    //PARA CADA MAQUIAGEM, CRIA UMA LINHA NA TABELA
                     maquiagens.forEach(maquiagem => {
                         const linha = document.createElement("tr");
+                        //PARA MOSTRAR APENAS A DATA, RETIRA O HORÁRIO
                         const dataValidade = maquiagem.validade ? maquiagem.validade.split('T')[0] : '';
                         linha.innerHTML = `
                             <td>${maquiagem.id_maquiagem}</td>
@@ -178,17 +198,26 @@
                         `;
                         tabelaMaquiagem.appendChild(linha);
                     });
+
+                    //SE A BUSCA NÃO DER CERTO, MOSTRA O ERRO NO CONSOLE
                 } else {
                     console.error("Erro ao buscar maquiagens:", respostaMaquiagem.status);
                 }
 
+                //BUSCA OS ESMALTES CADASTRADOS NO BACKEND
                 const respostaEsmalte = await fetch("http://localhost:8001/esmalte");
+                //VERIFICA SE A RESPOSTA DEU CERTO
                 if (respostaEsmalte.status === 200) {
+                    //SE SIM, TRANSFORMA A RESPOSTA EM JSON, CONVERTE A RESPOSTA EM UM ARRAY DE OBJETOS (CADA OBJETO É UM ESMALTE)
                     const esmaltes = await respostaEsmalte.json();
+                    //SELECIONA A TABELA DO HTML E LIMPA O CONTEÚDO ANTERIOR
                     const tabelaEsmalte = document.querySelector("#tabela_esmalte tbody");
-                    tabelaEsmalte.innerHTML = ""; 
+                    tabelaEsmalte.innerHTML = "";
+
+                    //PARA CADA ESMALTE, CRIA UMA LINHA NA TABELA
                     esmaltes.forEach(esmalte => {
                         const linha = document.createElement("tr");
+                        //PARA MOSTRAR APENAS A DATA, RETIRA O HORÁRIO
                         const dataFabricacao = esmalte.data_fabricacao ? esmalte.data_fabricacao.split('T')[0] : '';
                         linha.innerHTML = `
                             <td>${esmalte.id_esmalte}</td>
@@ -198,17 +227,24 @@
                         `;
                         tabelaEsmalte.appendChild(linha);
                     });
+
+                    //SE A BUSCA NÃO DER CERTO, MOSTRA O ERRO NO CONSOLE
                 } else {
                     console.error("Erro ao buscar esmaltes:", respostaEsmalte.status);
                 }
+
+                //SE OCORRER QUALQUER OUTRO ERRO DURANTE A BUSCA, MOSTRA NO CONSOLE
             } catch (error) {
                 console.error("Erro ao buscar dados:", error);
                 alert("Erro ao carregar dados. Verifique o console para mais detalhes.");
             }
         }
 
+        //ADICIONA UM EVENTO DE CLIQUE NO BOTÃO PARA ATUALIZAR A LISTA
         document.getElementById('atualizarLista').addEventListener('click', buscaDados);
+        //CHAMADA DA FUNÇÃO
         buscaDados();
     </script>
 </body>
+
 </html>

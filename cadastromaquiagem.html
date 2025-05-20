@@ -97,12 +97,13 @@
             transition: all 0.3s ease;
         }
 
+        /*ESTILO DE BOTÃO COM CURSOR*/
         #botao input:hover {
             background: rgba(255, 255, 255, 0.5);
             transform: translateY(-2px);
         }
 
-        /* Responsividade */
+        /* RESPONSIVIDADE */
         @media (max-width: 600px) {
             #caixa {
                 padding: 1.5rem;
@@ -121,7 +122,9 @@
 
 <body>
     <div id="caixa">
+        <!--TÍTULO-->
         <h2>CADASTRO DE MAQUIAGEM</h2>
+        <!--FORMULÁRIO PARA PREENCHIMENTO DO PRODUTO-->
         <form onsubmit="event.preventDefault();trataform()">
             <div>
                 <label for="id_maquiagem">ID</label>
@@ -151,22 +154,25 @@
 
     <script>
         async function trataform() {
+            //OBTENDO OS ELEMENTOS DO FORMULÁRIO PELO ID
             const inputId_maquiagem = document.getElementById("id_maquiagem");
             const inputNome = document.getElementById("nome_produto");
             const inputQuantidade = document.getElementById("quantidade_produto");
             const inputValidade = document.getElementById("validade");
 
+            //OBTENDO OS VALORES DOS CAMPOS DO FORMULÁRIO E GUARDANDO EM VARIÁVEIS
             const id_maquiagem = inputId_maquiagem.value;
             const nome_produto = inputNome.value;
             const quantidade_produto = inputQuantidade.value;
             const validade = inputValidade.value;
 
-            // Validação dos campos
+            // VALIDAÇÃO DA ENTRADA DOS CAMPOS DO FORMULÁRIO
             if (!id_maquiagem || !nome_produto || !quantidade_produto || !validade) {
                 alert("Por favor, preencha todos os campos.");
                 return;
             }
 
+            // CRIA O OBJETO QUE SERÁ ENVIADO PARA O BACKEND
             const objMaquiagem = {
                 id_maquiagem,
                 nome_produto,
@@ -174,6 +180,7 @@
                 validade
             };
 
+            //ENVIA O OBJETO PARA O BACKEND
             try {
                 const resposta = await fetch("http://localhost:8001/maquiagem", {
                     headers: {
@@ -183,13 +190,17 @@
                     body: JSON.stringify(objMaquiagem)
                 });
 
+                //MENSAGEM DE RETORNO: SUCESSO
                 if (resposta.status === 200) {
                     alert("Maquiagem cadastrada com sucesso!");
-                    // Limpa os campos após cadastro
+
+                    // LIMPA OS CAMPOS DO FORMULÁRIO
                     inputId_maquiagem.value = '';
                     inputNome.value = '';
                     inputQuantidade.value = '';
                     inputValidade.value = '';
+
+                    //MENSAGENS DE ERRO
                 } else if (resposta.status === 404) {
                     alert("Erro não identificado.");
                 } else if (resposta.status === 400) {
