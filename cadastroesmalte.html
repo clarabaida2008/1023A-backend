@@ -7,7 +7,9 @@
     <title>Cadastrar Esmalte</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -95,21 +97,22 @@
             transition: all 0.3s ease;
         }
 
+        /*ESTILO DE BOTÃO COM CURSOR*/
         #botao input:hover {
             background: rgba(255, 255, 255, 0.5);
             transform: translateY(-2px);
         }
 
-        /* Responsividade */
+        /* RESPONSIVIDADE */
         @media (max-width: 600px) {
             #caixa {
                 padding: 1.5rem;
             }
-            
+
             h2 {
                 font-size: 1.5rem;
             }
-            
+
             input {
                 padding: 0.7rem 1rem;
             }
@@ -119,7 +122,9 @@
 
 <body>
     <div id="caixa">
+        <!--TÍTULO-->
         <h2>CADASTRO DE ESMALTE</h2>
+        <!--FORMULÁRIO PARA PREENCHIMENTO DO PRODUTO-->
         <form onsubmit="event.preventDefault();trataform()">
             <div>
                 <label for="id_esmalte">ID Esmalte</label>
@@ -149,22 +154,25 @@
 
     <script>
         async function trataform() {
+            //OBTENDO OS ELEMENTOS DO FORMULÁRIO PELO ID
             const inputId_esmalte = document.getElementById("id_esmalte");
             const inputCor = document.getElementById("nome_cor");
             const inputMarca = document.getElementById("marca");
             const inputFabricacao = document.getElementById("data_fabricacao");
 
+            //OBTENDO OS VALORES DOS CAMPOS DO FORMULÁRIO E GUARDANDO EM VARIÁVEIS
             const id_esmalte = inputId_esmalte.value;
             const nome_cor = inputCor.value;
             const marca = inputMarca.value;
             const data_fabricacao = inputFabricacao.value;
 
-            // Validação dos campos
+            // VALIDAÇÃO DA ENTRADA DOS CAMPOS DO FORMULÁRIO
             if (!id_esmalte || !nome_cor || !marca || !data_fabricacao) {
                 alert("Por favor, preencha todos os campos.");
                 return;
             }
 
+            // CRIA O OBJETO QUE SERÁ ENVIADO PARA O BACKEND
             const objEsmalte = {
                 id_esmalte,
                 nome_cor,
@@ -172,6 +180,7 @@
                 data_fabricacao
             };
 
+            // ENVIA O OBJETO PARA O BACKEND
             try {
                 const resposta = await fetch("http://localhost:8001/esmalte", {
                     headers: {
@@ -181,13 +190,17 @@
                     body: JSON.stringify(objEsmalte)
                 });
 
+                //MENSAGEM DE RETORNO: SUCESSI
                 if (resposta.status === 200) {
                     alert("Esmalte cadastrado com sucesso!");
-                    // Limpa os campos após cadastro
+
+                    // LIMPA OS CAMPOS DO FORMULÁRIO
                     inputId_esmalte.value = '';
                     inputCor.value = '';
                     inputMarca.value = '';
                     inputFabricacao.value = '';
+
+                    //MENSAGENS DE ERRO
                 } else if (resposta.status === 404) {
                     alert("Erro não identificado.");
                 } else if (resposta.status === 400) {
@@ -201,4 +214,5 @@
         }
     </script>
 </body>
+
 </html>
