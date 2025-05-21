@@ -117,6 +117,51 @@
                 padding: 0.7rem 1rem;
             }
         }
+
+        /* ESTILOS PARA MENSAGENS DE ERRO */
+        .error-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 99, 71, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .error-toast button {
+            background: none;
+            border: none;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        @keyframes slideIn {
+            from {
+                top: -50px;
+                opacity: 0;
+            }
+
+            to {
+                top: 20px;
+                opacity: 1;
+            }
+        }
+
+        .success-toast {
+            background: rgba(46, 204, 113, 0.9) !important;
+        }
     </style>
 </head>
 
@@ -153,6 +198,22 @@
     </div>
 
     <script>
+        // FUNÇÃO PARA EXIBIR MENSAGENS DE ERRO ESTILIZADAS COM CSS
+        function showToast(message, isSuccess = false) {
+            const toast = document.createElement('div');
+            toast.className = `error-toast ${isSuccess ? 'success-toast' : ''}`;
+            toast.innerHTML = `
+        ${message}
+        <button onclick="this.parentElement.remove()">✕</button>`;
+            document.body.appendChild(toast);
+            // REMOVE A MENSAGEM AUTOMATICAMENTE APÓS 5 SEGUNDOS
+            setTimeout(() => {
+                toast.remove();
+            }, 5000);
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         async function trataform() {
             //OBTENDO OS ELEMENTOS DO FORMULÁRIO PELO ID
             const inputId_esmalte = document.getElementById("id_esmalte");
@@ -168,7 +229,15 @@
 
             // VALIDAÇÃO DA ENTRADA DOS CAMPOS DO FORMULÁRIO
             if (!id_esmalte || !nome_cor || !marca || !data_fabricacao) {
-                alert("Por favor, preencha todos os campos.");
+                showToast("⚠️ ATENÇÃO: POR FAVOR, PREENCHA TODOS OS CAMPOS DO FORMULÁRIO!");
+                return;
+            }
+            // VALIDAÇÃO DE CAMPOS: ID DEVE SER NÚMERO
+            // isNaN(Number(id_esmalte)): VERIFICA SE O VALOR DO ID NÃO É UM NÚMERO
+            // !Number.isInteger(Number(id_esmalte)): GARANTE QUE O ID SEJA UM NÚMERO INTEIRO
+            
+            if (isNaN(Number(id_esmalte)) || !Number.isInteger(Number(id_esmalte)) ) {
+                showToast("⚠️ ATENÇÃO: ALGUM CAMPO FOI PREENCHIDO INCORRETAMENTE. CONFIRA SE O ID É VÁLIDO!");
                 return;
             }
 
@@ -192,7 +261,7 @@
 
                 //MENSAGEM DE RETORNO: SUCESS
                 if (resposta.status === 200) {
-                    alert("Esmalte cadastrado com sucesso!");
+                    showToast("✅ ESMALTE CADASTRADO COM SUCESSO!", true);
 
                     // LIMPA OS CAMPOS DO FORMULÁRIO
                     inputId_esmalte.value = '';
@@ -202,32 +271,32 @@
 
                     //MENSAGENS DE ERRO
                 } else if (resposta.status === 404) {
-                    alert("Erro não identificado.");
+                    showToast("⚠️ ERRO: " + (dados.mensagem || "ERRO NÃO IDENTIFICADO!"));
                 } else if (resposta.status === 400) {
                     const dados = await resposta.json();
-                    alert("Erro do lado do backend:\n" + dados.mensagem);
+                    showToast("⚠️ ERRO: " + (dados.mensagem || "ERRO NO BACKEND!"));
                 }
             } catch (erro) {
                 // TENTA EXTRAIR A MENSAGEM DO BACKEND SE HOUVER
                 if (erro instanceof Response) {
                     try {
                         const dados = await erro.json();
-                        alert(dados.mensagem || "Erro desconhecido do backend.");
+                        showToast("⚠️ ERRO: " + (dados.mensagem || "ERRO DESCONHECIDO DO BACKEND!"));
                     } catch {
-                        alert("Erro desconhecido do backend.");
+                        showToast("⚠️ ERRO: " + (erro.message || "ERRO DESCONHECIDO DO BACKEND!"));
                     }
                 } else if (erro.code === "ECONNREFUSED") {
-                    alert("ERRO: LIGUE O LARAGÃO!!! CABEÇA!");
+                    showToast("⚠️ ERRO: LIGUE O LARAGÃO!!! CABEÇA!");
                 } else if (erro.code === "ER_BAD_DB_ERROR") {
-                    alert("ERRO: CONFIRA O NOME DO BANCO DE DADOS OU CRIE UM NOVO BANCO COM O NOME QUE VOCÊ COLOCOU LÁ NA CONEXÃO");
+                    showToast("⚠️ ERRO: CONFIRA O NOME DO BANCO DE DADOS OU CRIE UM NOVO BANCO COM O NOME QUE VOCÊ COLOCOU LÁ NA CONEXÃO");
                 } else if (erro.code === "ER_ACCESS_DENIED_ERROR") {
-                    alert("ERRO: CONFIRA O USUÁRIO E SENHA NA CONEXÃO");
+                    showToast("⚠️ ERRO: CONFIRA O USUÁRIO E SENHA NA CONEXÃO");
                 } else if (erro.code === "ER_DUP_ENTRY") {
-                    alert("ERRO: VOCÊ DUPLICOU A CHAVE PRIMÁRIA");
+                    showToast("⚠️ ERRO: VOCÊ DUPLICOU A CHAVE PRIMÁRIA");
                 } else if (erro.name === "TypeError") {
-                    alert("Erro de conexão: Não foi possível conectar ao backend. Verifique se o servidor está rodando.");
+                    showToast("⚠️ ERRO DE CONEXÃO: NÃO FOI POSSÍVEL CONECTAR AO BACKEND! VERIFIQUE SE O SERVIDOR EST");
                 } else {
-                    alert("Erro desconhecido: " + (erro.message || erro));
+                    showToast("⚠️ Erro desconhecido: " + (erro.message || erro));
                 }
             }
         }

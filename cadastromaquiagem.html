@@ -168,7 +168,17 @@
 
             // VALIDAÇÃO DA ENTRADA DOS CAMPOS DO FORMULÁRIO
             if (!id_maquiagem || !nome_produto || !quantidade_produto || !validade) {
-                alert("Por favor, preencha todos os campos.");
+                alert("⚠️ ATENÇÃO: POR FAVOR, PREENCHA TODOS OS CAMPOS DO FORMULÁRIO!");
+                return;
+            }
+
+            // VALIDAÇÃO DE CAMPOS: ID e QUANTIDADE DEVEM SER NÚMEROS
+            // isNaN(Number(id_maquiagem)): VERIFICA SE O VALOR DO ID NÃO É UM NÚMERO
+            // !Number.isInteger(Number(id_maquiagem)): GARANTE QUE O ID SEJA UM NÚMERO INTEIRO
+            // isNaN(Number(quantidade_produto)): VERIFICA SE A QUANTIDADE NÃO É UM NÚMERO
+            // Number(quantidade_produto) <= 0: GARANTE QUE SEJA MAIOR QUE ZERO
+            if (isNaN(Number(id_maquiagem)) || !Number.isInteger(Number(id_maquiagem)) || isNaN(Number(quantidade_produto)) || Number(quantidade_produto) <= 0) {
+                alert("Algum campo foi preenchido incorretamente. Confira se o ID e a quantidade são números válidos!");
                 return;
             }
 
