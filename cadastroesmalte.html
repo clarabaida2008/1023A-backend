@@ -147,6 +147,7 @@
             margin-left: 10px;
         }
 
+        /*ANIMAÇÃO DO TOAST*/
         @keyframes slideIn {
             from {
                 top: -50px;
@@ -201,7 +202,9 @@
         // FUNÇÃO PARA EXIBIR MENSAGENS DE ERRO ESTILIZADAS COM CSS
         function showToast(message, isSuccess = false) {
             const toast = document.createElement('div');
+            // A CLASSE DO TOAST É DEFINIDA: ERRO OU SUCESSO
             toast.className = `error-toast ${isSuccess ? 'success-toast' : ''}`;
+            // BOTÃO PARA FECHAR A MENSAGEM
             toast.innerHTML = `
         ${message}
         <button onclick="this.parentElement.remove()">✕</button>`;
@@ -228,16 +231,24 @@
             const data_fabricacao = inputFabricacao.value;
 
             // VALIDAÇÃO DA ENTRADA DOS CAMPOS DO FORMULÁRIO
+            //TODOS OS CAMPOS DEVEM SER PREENCHIDOS
             if (!id_esmalte || !nome_cor || !marca || !data_fabricacao) {
                 showToast("⚠️ ATENÇÃO: POR FAVOR, PREENCHA TODOS OS CAMPOS DO FORMULÁRIO!");
                 return;
             }
-            // VALIDAÇÃO DE CAMPOS: ID DEVE SER NÚMERO
+            // O ID DEVE SER NÚMERO INTEIRO
             // isNaN(Number(id_esmalte)): VERIFICA SE O VALOR DO ID NÃO É UM NÚMERO
             // !Number.isInteger(Number(id_esmalte)): GARANTE QUE O ID SEJA UM NÚMERO INTEIRO
-            
-            if (isNaN(Number(id_esmalte)) || !Number.isInteger(Number(id_esmalte)) ) {
+
+            if (isNaN(Number(id_esmalte)) || !Number.isInteger(Number(id_esmalte))) {
                 showToast("⚠️ ATENÇÃO: ALGUM CAMPO FOI PREENCHIDO INCORRETAMENTE. CONFIRA SE O ID É VÁLIDO!");
+                return;
+            }
+
+            //COR E MARCA NÃO PODEM SER NÚMEROS
+
+            if (Number(nome_cor) || Number(marca)) {
+                showToast("⚠️ ATENÇÃO: ALGUM CAMPO FOI PREENCHIDO INCORRETAMENTE. CONFIRA SE COR E MARCA SÃO VÁLIDOS!");
                 return;
             }
 
